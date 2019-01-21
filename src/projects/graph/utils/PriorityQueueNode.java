@@ -17,10 +17,11 @@ public class PriorityQueueNode {
 
     private int node, distance, order;
 
-    /*
+    /**
      * Simple constructor. As a side effect, stores the index of insertion into the container priority queue.
      * @param node The node id.
      * @param distance The distance between the source node and the provided node.
+     * @param order The creation order of this {@link PriorityQueueNode}. Useful for breaking ties in the container priority queue.
      */
     public PriorityQueueNode(int node, int distance, int order){
         this.node = node;
@@ -29,7 +30,9 @@ public class PriorityQueueNode {
     }
 
     /**
-     * One-arg constructor. Calls two-arg constructor in body.
+     * Two-arg constructor. Calls three-arg constructor in body.
+     * @param node The node id.
+     * @param order he creation order of this {@link PriorityQueueNode}.
      */
     public PriorityQueueNode(int node, int order){
         this(node, Graph.INFINITY, order);
@@ -52,7 +55,8 @@ public class PriorityQueueNode {
     }
 
     /**
-     * Simple accessor for the order that this
+     * Simple accessor for the order that this {@link PriorityQueueNode} was inserted in.
+     * @return the order of insertion for this {@link PriorityQueueNode}.
      */
     public int getOrder(){
         return order;

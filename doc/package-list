@@ -1,6 +1,10 @@
 
+demos
 demos.bags
 demos.bags.clients
 demos.bags.testcases
 demos.matrices.java
+projects.avlg
+projects.avlg.exceptions
 projects.graph
+projects.graph.utils
