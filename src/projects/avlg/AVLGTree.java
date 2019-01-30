@@ -1,15 +1,4 @@
 package projects.avlg;
-/**
- * <p> <tt>tavl.ThreadedAVLTree</tt> implements threaded Adelson-Velsky-Landis (AVL) trees.
- * Those trees allow efficient search, insertion and deletion in <em>O(logn)</em> time, by virtue
- * of being AVL trees, as well as amortized constant time of finding the inorder successor of any given
- * node, by virtue of being threaded trees. They thus combine two powerful ideas in a common
- * framework.</p>
- *
- * @author Jason Filippou (jasonfil@cs.umd.edu, https://github.com/jasonfil)
- * @param <T> The {@link java.lang.Comparable} type held by the data structure.
- * @since February 2015
- */
 
 import projects.avlg.exceptions.EmptyTreeException;
 import projects.avlg.exceptions.InvalidBalanceException;
