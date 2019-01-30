@@ -16,10 +16,6 @@ import java.util.Set;
  * representation does not have to change at all! But you will <b>still</b> need to make note of the fact that a new node was
  * inserted. After all, we want {@link #getNumNodes()} to work correctly, don't we? </p>
  *
- * <p>Adding a new edge is also O(1), because there's no need to keep the list ordered; we can just add the element in the
- * front without any further hassle. If you are having trouble understanding why the list can be unordered, check the docs
- * of {@link #toAdjacencyMatrixGraph()}.</p>
- *
  *
  *<p>{@link #edgeBetween(int, int)}, {@link #deleteEdge(int, int)}, {@link #getEdgeWeight(int, int)} and
  * {@link #getNeighbors(int)} all run in O(E) time.</p>
