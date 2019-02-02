@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 
 /**
- * <p><tt>StudentTestsPrototype</tt> is an example class that contains some basic examples. You may write your own tests here.
+ * <p>{@link StudentTests} is an example class that contains some basic unit tests. You may write your own tests here.
  * It is <b>very important</b> that you write your own tests! </p>
  * @author --- YOUR NAME HERE! -----
  * @see Graph

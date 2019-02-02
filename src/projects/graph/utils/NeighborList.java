@@ -102,7 +102,7 @@ public class NeighborList implements Iterable<Neighbor> {
      * Asks the list about the existence of a particular neighbor.
      *
      * @param node The ID of the neighbor node.
-     * @return <tt>true</tt> if, and only if, node is a neighbor node of the node we called the method for, false otherwise.
+     * @return true if, and only if, node is a neighbor node of the node we called the method for, false otherwise.
      */
     public boolean containsNeighbor(int node) {
         Node current = head;
@@ -166,7 +166,7 @@ public class NeighborList implements Iterable<Neighbor> {
 
 
     /**
-     * Stores the (node, weight) pair at the back of the list.
+     * Retrieves the weight of the edge between the current node and the provided node.
      *
      * @param node The ID of the neighbor node.
      * @return The weight of the edge between the node for which we called the method and the argument node.
