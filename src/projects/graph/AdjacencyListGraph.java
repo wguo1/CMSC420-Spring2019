@@ -106,12 +106,12 @@ public class AdjacencyListGraph extends Graph {
     }
 
     /**
-     * Transforms this into an instance of {@link AdjacencyMatrixGraph}. This is an O(E) operation.
+     * Transforms this into an instance of {@link SparseAdjacencyMatrixGraph}. This is an O(E) operation.
      *
      * You are <b>not</b> allowed to implement this method by using other transformation methods. For example, you
      * <b>cannot</b> implement it with the line of code toAdjacencyMatrixGraph().toSparseAdjacencyMatrixGraph().
      *
-     * @return An instance of {@link AdjacencyMatrixGraph}.
+     * @return An instance of {@link SparseAdjacencyMatrixGraph}.
      */
     public SparseAdjacencyMatrixGraph toSparseAdjacencyMatrixGraph(){
         throw UNIMPL_METHOD;
