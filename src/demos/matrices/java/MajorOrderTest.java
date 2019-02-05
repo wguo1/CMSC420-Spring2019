@@ -9,7 +9,7 @@ import static demos.matrices.java.Dimension.*;
  */
 public class MajorOrderTest {
 
-    private static final int N = 10000;
+    private static final int N = 100000;
     private static final int WAIT = 1; // In seconds
 
 
