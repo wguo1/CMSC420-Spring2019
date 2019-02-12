@@ -1,15 +1,4 @@
 package projects.avlg;
-/**
- * <p> <tt>tavl.ThreadedAVLTree</tt> implements threaded Adelson-Velsky-Landis (AVL) trees.
- * Those trees allow efficient search, insertion and deletion in <em>O(logn)</em> time, by virtue
- * of being AVL trees, as well as amortized constant time of finding the inorder successor of any given
- * nodes, by virtue of being threaded trees. They thus combine two powerful ideas in a common
- * framework.</p>
- *
- * @author Jason Filippou (jasonfil@cs.umd.edu, https://github.com/jasonfil)
- * @param <T> The {@link java.lang.Comparable} type held by the data structure.
- * @since February 2015
- */
 
 import projects.avlg.exceptions.EmptyTreeException;
 import projects.avlg.exceptions.InvalidBalanceException;
@@ -53,7 +42,7 @@ public class AVLGTree<T extends Comparable<T>> {
      * @throws InvalidBalanceException if <tt>maxImbalance</tt> is a value smaller than 1.
      */
     public AVLGTree(int maxImbalance) throws InvalidBalanceException {
-        throw  UNIMPL_METHOD;
+        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
     }
 
     /**
@@ -61,7 +50,7 @@ public class AVLGTree<T extends Comparable<T>> {
      * @param key The key to insert in the tree.
      */
     public void insert(T key) {
-        throw  UNIMPL_METHOD;
+        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
     }
 
     /**
@@ -71,7 +60,7 @@ public class AVLGTree<T extends Comparable<T>> {
      * @throws EmptyTreeException if the tree is empty.
      */
     public T delete(T key) throws EmptyTreeException {
-        throw  UNIMPL_METHOD;
+        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
     }
 
     /**
@@ -82,7 +71,7 @@ public class AVLGTree<T extends Comparable<T>> {
      * @throws EmptyTreeException if the tree is empty.
      */
     public T search(T key) throws EmptyTreeException {
-        throw  UNIMPL_METHOD;
+        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
     }
 
     /**
@@ -90,7 +79,7 @@ public class AVLGTree<T extends Comparable<T>> {
      * @return The maximum imbalance parameter provided as a constructor parameter.
      */
     public int getMaxImbalance(){
-        throw  UNIMPL_METHOD;
+        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
     }
 
 
@@ -101,7 +90,7 @@ public class AVLGTree<T extends Comparable<T>> {
      * @return The height of the tree. If the tree is empty, returns -1.
      */
     public int getHeight() {
-        throw  UNIMPL_METHOD;
+        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
     }
 
     /**
@@ -109,7 +98,7 @@ public class AVLGTree<T extends Comparable<T>> {
      * @return <tt>true</tt> if the tree is empty, <tt>false</tt> otherwise.
      */
     public boolean isEmpty() {
-        throw  UNIMPL_METHOD;
+        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
     }
 
     /**
@@ -118,7 +107,7 @@ public class AVLGTree<T extends Comparable<T>> {
      * @throws  EmptyTreeException if the tree is empty.
      */
     public T getRoot() throws EmptyTreeException{
-        throw  UNIMPL_METHOD;
+        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
     }
 
 
@@ -129,7 +118,7 @@ public class AVLGTree<T extends Comparable<T>> {
      * <tt>false</tt> otherwise.
      */
     public boolean isBST() {
-        throw  UNIMPL_METHOD;
+        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
     }
 
 
@@ -140,7 +129,7 @@ public class AVLGTree<T extends Comparable<T>> {
      * <tt>false</tt> otherwise.
      */
     public boolean isAVLGBalanced() {
-        throw  UNIMPL_METHOD;
+        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
     }
 
     /**
@@ -148,7 +137,7 @@ public class AVLGTree<T extends Comparable<T>> {
      * tree should have <b>0</b> elements.</p>
      */
     public void clear(){
-        throw  UNIMPL_METHOD;
+        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
     }
 
 
@@ -157,7 +146,7 @@ public class AVLGTree<T extends Comparable<T>> {
      * @return  The number of elements in the tree.
      */
     public int getCount(){
-        throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
+        throw UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
 
     }
 }
