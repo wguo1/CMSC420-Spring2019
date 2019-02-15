@@ -1,7 +1,6 @@
 package projects.graph;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <p>{@link Graph} is an abstraction over directed and weighted graphs. It supports insertion of nodes, insertion
@@ -155,6 +154,57 @@ public abstract class Graph {
      * @return An ordered {@link List} whose first (head) element is source, the last (tail) element is dest
      * and all the intermediate nodes make up the path from source to dest.
      */
-    public List<Integer> shortestPath(int source, int dest){ throw UNIMPL_METHOD; }
+    public List<Integer> shortestPath(int source, int dest){
+        Set<Integer> visited = new HashSet<Integer>(0);
+
+        int[] weightTable = new int[getNumNodes()];
+        int[] prevTable = new int[getNumNodes()];
+        Arrays.fill(weightTable, INFINITY);
+        Arrays.fill(prevTable, -1);
+
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(source);
+
+        while (!queue.isEmpty())
+        {
+            int cur = queue.poll();
+            Set<Integer> neighbors = getNeighbors(cur);
+
+            visited.add(cur);
+            for (Integer i : neighbors)
+            {
+                int weight = getEdgeWeight(cur, i);
+
+                if (weight + weightTable[cur] < weightTable[i])
+                {
+                    weightTable[i] = weight + weightTable[cur];
+                    prevTable[i] = cur;
+                }
+
+                if (!visited.contains(i))
+                    queue.add(i);
+            }
+        }
+
+        int cur = dest;
+        LinkedList<Integer> list = new LinkedList<>();
+
+        while (weightTable[cur] != INFINITY)
+        {
+            list.addFirst(cur);
+            cur = prevTable[cur];
+
+            if (cur == source)
+            {
+                list.addFirst(source);
+                break;
+            }
+        }
+
+        if (list.contains(source))
+            return (List)list;
+        else
+            return new LinkedList<>();
+    }
 
 }

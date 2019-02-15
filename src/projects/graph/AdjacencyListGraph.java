@@ -1,7 +1,9 @@
 package projects.graph;
 
+import projects.graph.utils.Neighbor;
 import projects.graph.utils.NeighborList;
 
+import java.util.HashSet;
 import java.util.Set;
 /**
  * <p>{@link AdjacencyListGraph} is a {@link Graph} implemented as an adjacency list, i.e a one-dimensional array of linked lists,
@@ -31,7 +33,9 @@ public class AdjacencyListGraph extends Graph {
     /* ***************************************************** */
     /* PLACE ANY EXTRA PRIVATE DATA MEMBERS OR METHODS HERE: */
     /* ***************************************************** */
-
+    private boolean nodeExists(int source, int dest) {
+        return source >= 0 && source < list.length && dest >= 0 && dest < list.length;
+    }
     /* ************************************************** */
     /* IMPLEMENT THE FOLLOWING PUBLIC METHODS. MAKE SURE  */
     /* YOU ERASE THE LINES THAT THROW EXCEPTIONS.         */
@@ -42,53 +46,93 @@ public class AdjacencyListGraph extends Graph {
      * even if you don't do anything with it.
      */
     public AdjacencyListGraph(){
-        throw UNIMPL_METHOD;
+        list = new NeighborList[0];
     }
 
     @Override
     public void addNode() {
-        throw UNIMPL_METHOD;
+        NeighborList[] temp = new NeighborList[list.length + 1];
+        System.arraycopy(list, 0, temp, 0, list.length);
+        temp[list.length] = new NeighborList();
+        list = temp;
     }
 
     @Override
     public void addEdge(int source, int dest, int weight) {
-        throw UNIMPL_METHOD;
+        if (weight < 0 || weight > INFINITY)
+            throw new RuntimeException();
+        else if (weight == 0)
+            deleteEdge(source, dest);
+        else if (nodeExists(source, dest))
+        {
+            if (list[source].containsNeighbor(dest))
+                list[source].setWeight(dest, weight);
+            else
+                list[source].addBack(dest, weight);
+        }
     }
 
 
     @Override
     public void deleteEdge(int source, int dest) {
-        throw UNIMPL_METHOD;
+        if (nodeExists(source, dest))
+            if (list[source].containsNeighbor(dest))
+                list[source].remove(dest);
     }
 
     @Override
     public boolean edgeBetween(int source, int dest) {
-        throw UNIMPL_METHOD;
+        boolean exists = false;
+
+        if (nodeExists(source, dest))
+            if (list[source].containsNeighbor(dest))
+                exists = true;
+
+        return exists;
     }
 
     @Override
     public int getEdgeWeight(int source, int dest) {
-        throw UNIMPL_METHOD;
+        int weight = 0;
+
+        if (nodeExists(source, dest))
+            if (list[source].containsNeighbor(dest))
+                weight = list[source].getWeight(dest);
+
+        return weight;
     }
 
     @Override
     public Set<Integer> getNeighbors(int node) {
-        throw UNIMPL_METHOD;
+        Set<Integer> neighbors = new HashSet<>(0);
+
+        if (node >= list.length || node < 0)
+            neighbors = null;
+        else
+            for (Neighbor neighbor : list[node])
+                neighbors.add(neighbor.getNode());
+
+        return neighbors;
     }
 
     @Override
     public int getNumNodes() {
-        throw UNIMPL_METHOD;
+        return list.length;
     }
 
     @Override
     public int getNumEdges() {
-        throw UNIMPL_METHOD;
+        int total = 0;
+
+        for (NeighborList neighbors : list)
+            total += neighbors.getCount();
+
+        return total;
     }
 
     @Override
     public void clear() {
-        throw UNIMPL_METHOD;
+        list = new NeighborList[0];
     }
 
     /* Methods specific to this class follow. */
@@ -102,18 +146,43 @@ public class AdjacencyListGraph extends Graph {
      * @return An instance of {@link AdjacencyMatrixGraph}.
      */
     public AdjacencyMatrixGraph toAdjacencyMatrixGraph(){
-        throw UNIMPL_METHOD;
+        AdjacencyMatrixGraph matrix = new AdjacencyMatrixGraph();
+        int cur = 0;
+
+        for (NeighborList neighbors : list){
+            matrix.addNode();
+            for (Neighbor neighbor : neighbors)
+                matrix.addEdge(cur, neighbor.getNode(), neighbor.getWeight());
+
+            cur++;
+        }
+
+        return matrix;
     }
 
     /**
-     * Transforms this into an instance of {@link SparseAdjacencyMatrixGraph}. This is an O(E) operation.
+     * Transforms this into an instance of {@link AdjacencyMatrixGraph}. This is an O(E) operation.
      *
      * You are <b>not</b> allowed to implement this method by using other transformation methods. For example, you
      * <b>cannot</b> implement it with the line of code toAdjacencyMatrixGraph().toSparseAdjacencyMatrixGraph().
      *
-     * @return An instance of {@link SparseAdjacencyMatrixGraph}.
+     * @return An instance of {@link AdjacencyMatrixGraph}.
      */
     public SparseAdjacencyMatrixGraph toSparseAdjacencyMatrixGraph(){
-        throw UNIMPL_METHOD;
+        SparseAdjacencyMatrixGraph sGraph = new SparseAdjacencyMatrixGraph();
+        int count = 0;
+
+        for (int i = 0; i < list.length; i++)
+            sGraph.addNode();
+
+        for (NeighborList neighbors : list)
+        {
+            for (Neighbor neighbor : neighbors)
+                sGraph.addEdge(count, neighbor.getNode(), neighbor.getWeight());
+
+            count++;
+        }
+
+        return sGraph;
     }
 }

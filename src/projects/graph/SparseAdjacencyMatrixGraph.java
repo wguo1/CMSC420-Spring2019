@@ -1,5 +1,7 @@
 package projects.graph;
 
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -69,6 +71,38 @@ public class SparseAdjacencyMatrixGraph extends Graph {
     /* PLACE ANY EXTRA PRIVATE DATA MEMBERS OR METHODS HERE: */
     /* ***************************************************** */
 
+    private int index = -1;
+
+    private boolean nodeExists(int source, int dest) {
+        return source >= 0 && source <= index && dest >= 0 && dest <= index;
+    }
+
+    private EdgeData search(int source, int dest){
+        EdgeData temp = null;
+
+        if (nodeExists(source, dest))
+        {
+            for (EdgeData edge : list)
+            {
+                if (edge.source >= source)
+                {
+                    if (edge.source == source)
+                    {
+                        if (edge.dest >= dest)
+                        {
+                            if (edge.dest == dest)
+                                temp = edge;
+                            break;
+                        }
+                    }
+                    else break;
+                }
+            }
+        }
+
+        return temp;
+    }
+
     /* ************************************************** */
     /* IMPLEMENT THE FOLLOWING PUBLIC METHODS. MAKE SURE  */
     /* YOU ERASE THE LINES THAT THROW EXCEPTIONS.         */
@@ -79,52 +113,106 @@ public class SparseAdjacencyMatrixGraph extends Graph {
      * even if you don't do anything with it.
      */
     public SparseAdjacencyMatrixGraph(){
-        throw UNIMPL_METHOD;
+        list = new LinkedList<EdgeData>();
     }
 
     @Override
     public void addNode() {
-        throw UNIMPL_METHOD;
+        index++;
     }
 
     @Override
     public void addEdge(int source, int dest, int weight) {
-        throw UNIMPL_METHOD;
+        if (weight < 0 || weight > INFINITY)
+            throw new RuntimeException();
+        else if (weight == 0)
+            deleteEdge(source, dest);
+        else if (nodeExists(source, dest))
+        {
+            int cur = 0;
+            for (EdgeData edge : list)
+            {
+                if (edge.source >= source)
+                {
+                    if (edge.source == source)
+                    {
+                        if (edge.dest >= dest)
+                        {
+                            if (edge.dest == dest)
+                                edge.weight = weight;
+                            else
+                                list.add(cur, new EdgeData(source, dest, weight));
+
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        list.add(cur, new EdgeData(source, dest, weight));
+                        break;
+                    }
+                }
+
+                cur++;
+            }
+
+            if (cur == list.size())
+                list.add(new EdgeData(source, dest, weight));
+        }
     }
 
     @Override
     public void deleteEdge(int source, int dest) {
-        throw UNIMPL_METHOD;
+        EdgeData temp = search(source, dest);
+
+        if (temp != null)
+            list.remove(temp);
     }
 
     @Override
     public boolean edgeBetween(int source, int dest) {
-        throw UNIMPL_METHOD;
+        return search(source, dest) != null;
     }
 
     @Override
     public int getEdgeWeight(int source, int dest) {
-        throw UNIMPL_METHOD;
+        EdgeData temp = search(source, dest);
+
+        if (temp != null)
+            return temp.weight;
+        else
+            return 0;
     }
 
     @Override
     public Set<Integer> getNeighbors(int node) {
-        throw UNIMPL_METHOD;
+        Set<Integer> neighbors = new HashSet<Integer>(0);
+
+        for (EdgeData edge : list)
+        {
+            if (edge.source == node)
+                neighbors.add(edge.dest);
+            else if (edge.source > node)
+                break;
+        }
+
+        return neighbors;
     }
 
     @Override
     public int getNumNodes() {
-        throw UNIMPL_METHOD;
+        return index + 1;
     }
 
     @Override
     public int getNumEdges() {
-        throw UNIMPL_METHOD;
+        return list.size();
     }
 
     @Override
     public void clear() {
-        throw UNIMPL_METHOD;
+        list = new LinkedList<EdgeData>();
+        index = -1;
     }
 
     /* Methods specific to this class follow. */
@@ -144,7 +232,15 @@ public class SparseAdjacencyMatrixGraph extends Graph {
      * @return An {@link AdjacencyMatrixGraph} instance.
      */
     public AdjacencyMatrixGraph toAdjacencyMatrixGraph(){
-        throw UNIMPL_METHOD;
+        AdjacencyMatrixGraph matrix = new AdjacencyMatrixGraph();
+
+        for (int i = 0; i < index; i++)
+            matrix.addNode();
+
+        for (EdgeData edge : list)
+            matrix.addEdge(edge.source, edge.dest, edge.weight);
+
+        return matrix;
     }
 
     /**
@@ -157,6 +253,14 @@ public class SparseAdjacencyMatrixGraph extends Graph {
      * @return An {@link AdjacencyListGraph} instance.
      */
     public AdjacencyListGraph toAdjacencyListGraph(){
-        throw UNIMPL_METHOD;
+        AdjacencyListGraph newList = new AdjacencyListGraph();
+
+        for (int i = 0; i < index; i++)
+            newList.addNode();
+
+        for (EdgeData edge : list)
+            newList.addEdge(edge.source, edge.dest, edge.weight);
+
+        return newList;
     }
 }

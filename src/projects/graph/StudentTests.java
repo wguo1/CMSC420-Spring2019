@@ -1,8 +1,8 @@
 package projects.graph;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
+import static org.junit.Assert.*;
 
 /**
  * <p>{@link StudentTests} is an example class that contains some basic unit tests. You may write your own tests here.
@@ -67,6 +67,7 @@ public class StudentTests {
 
         //Deleting an edge that doesn't exist. Doing so should not make any changes to the graph.
         graph.deleteEdge(1,0);
+
         assertTrue("After trying to remove a non-existent edge, the number of edges should not be changed.", graph.getNumEdges() == 4);
 
         //Deleting an existing edge. Deleting an edge should never remove a node.
@@ -74,9 +75,8 @@ public class StudentTests {
         assertTrue("After trying to remove an existing edge, the graph should have 3 edges",
                 graph.getNumEdges() == 3);
         assertTrue("After the successful removal of an edge, the number of nodes should be unchanged.", graph.getNumNodes() == 5);
-
-
     }
+
 
     @Test
     public void testEdgeStressTest(){
@@ -111,6 +111,22 @@ public class StudentTests {
         assertTrue("Matrix graph should have 900 edges but it had " + matrix.getNumEdges() + " edges.", matrix.getNumEdges() == 900);
 
 
+    }
+
+    @Test
+    public void testShortestPath(){
+        AdjacencyMatrixGraph matrix= new AdjacencyMatrixGraph();
+        for(int i = 0; i < 7; i++)
+            matrix.addNode();
+
+        matrix.addEdge(6, 4, 1);
+        matrix.addEdge(0, 5, 3);
+        matrix.addEdge(4, 0, 4);
+        matrix.addEdge(6, 5, 5);
+        matrix.addEdge(5, 1, 4);
+        matrix.addEdge(1, 6, 1);
+
+        System.out.println(matrix.shortestPath(1, 1));
     }
 
 }
