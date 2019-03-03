@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"demos"},{"l":"demos.bags"},{"l":"demos.bags.clients"},{"l":"demos.bags.testcases"},{"l":"demos.matrices.java"},{"l":"demos.traversals"},{"l":"projects.graph"},{"l":"projects.graph.utils"}]
+packageSearchIndex = [{"l":"demos"},{"l":"demos.bags"},{"l":"demos.bags.clients"},{"l":"demos.bags.testcases"},{"l":"demos.hashing"},{"l":"demos.matrices.java"},{"l":"demos.traversals"},{"l":"projects.avlg"},{"l":"projects.avlg.exceptions"},{"l":"projects.graph"},{"l":"projects.graph.utils"}]

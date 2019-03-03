@@ -99,7 +99,7 @@ public abstract class Graph {
      * and we don't test for it. If the node <b>does</b> exist in the graph but it has no neighbors, the returned {@link Set} should be non-null,
      * but  <b>empty (size 0)</b>.</p>
      * @param node The node to retrieve the neighbors of.
-     * @return A {@link Set} of all nodes to which <tt>node</tt> points.
+     * @return A {@link Set} of all nodes to which node points.
      */
     public abstract Set<Integer> getNeighbors(int node);
 
