@@ -9,3 +9,6 @@ projects.avlg
 projects.avlg.exceptions
 projects.graph
 projects.graph.utils
+projects.phonebook
+projects.phonebook.hashes
+projects.phonebook.utils
