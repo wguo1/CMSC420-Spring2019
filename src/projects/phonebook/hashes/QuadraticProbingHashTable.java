@@ -39,14 +39,10 @@ public class QuadraticProbingHashTable implements HashTable{
         return (key.hashCode() & 0x7fffffff) % table.length;
     }
 
-    /*  YOU SHOULD ALSO IMPLEMENT THE FOLLOWING 2 METHODS ACCORDING TO THE SPECS
-     * PROVIDED IN THE PROJECT WRITEUP, BUT KEEP THEM PRIVATE!  */
+    /*  YOU SHOULD ALSO IMPLEMENT THE FOLLOWING METHOD ACCORDING TO THE SPECS
+     * PROVIDED IN THE PROJECT WRITEUP, BUT KEEP IT PRIVATE!  */
 
     private void enlarge(){
-        throw UNIMPL_METHOD; // <---- ERASE THIS LINE WHEN YOU IMPLEMENT THIS METHOD!
-    }
-
-    private void shrink() {
         throw UNIMPL_METHOD; // <---- ERASE THIS LINE WHEN YOU IMPLEMENT THIS METHOD!
     }
 
