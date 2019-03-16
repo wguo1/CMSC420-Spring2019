@@ -100,7 +100,7 @@ public class StudentTests {
                 "the new height was not the expected one.", 2, tree.getHeight()); // Height of 2 expected
     }
 
-    /* Let's also build a test with an AVL-2 tree where we *expect* the root and height to change. */
+    /* Let's also build a test with an AVL-2 tree where we *expect* the root and height to change.*/
     @Test
     public void testAVLChanged() throws InvalidBalanceException, EmptyTreeException {
         tree = new AVLGTree<>(2);
@@ -113,7 +113,7 @@ public class StudentTests {
         assertEquals("In an AVL-2 tree with four descending order integers inserted, " +
                 "the new height was not the expected one.", 2, tree.getHeight()); // Height of 2 expected
     }
-    
+
     
     /* In class, we mentioned an interesting special case of deletion. Namely, when we delete from a subtree and it 
      * turns out that we have to balance, to determine which kind of rotation we have to do, we have to check the balance
@@ -152,13 +152,13 @@ public class StudentTests {
         *  what exactly happened and elevate that information to the user. fail() is a method in org.junit.Assert which we statically
         *  import at the top of this file. This method essentially fails the test with the provided message. This is how we give you your
         *  messages on the submit server whenever you fail a test!
-        */
-        try {
+         */
+       // try {
             tree.delete(2);
-        }  catch(Throwable t){
+        /*}  catch(Throwable t){
             fail("While deleting 2 in an AVL-1 tree, we encountered a " + t.getClass().getSimpleName() + " with message: " +
                     t.getMessage() + ".");
-        }
+        }*/
 
         assertEquals("In an AVL-1 tree where we deleted the root's singleton left child, we encountered an unexpected new root.",
                 new Integer(7), tree.getRoot());
@@ -184,14 +184,91 @@ public class StudentTests {
 
     /* The following test is identical to the previous one, with the only caveat that it checks whether the
      * tree satisfies the AVL-3 condition, instead of the BST condition.
-     */
-
+}
+*/
     @Test
     public void testEnsureAVLG() throws InvalidBalanceException {
         tree = new AVLGTree<>(3);
-        for(int i = 0; i < NUMS; i++)
+        for (int i = 0; i < 1000; i++)
             tree.insert(r.nextInt());
         assertTrue("After inserting " + NUMS + " - many random elements, it was determined that our AVL-3 tree" +
                 " did not satisfy the AVL-3 property!", tree.isAVLGBalanced());
     }
+
+
+    @Test
+    public void test1() throws InvalidBalanceException, EmptyTreeException {
+        tree = new AVLGTree<>(1);
+        tree.insert(0);
+        tree.insert(-1);
+
+        assertEquals(1, tree.getHeight());
+
+        tree.insert(-2);
+        assertEquals("In an AVL-2 tree with three descending order integers inserted, " +
+                "the new root was not the expected one.", new Integer(-1), tree.getRoot());
+        assertEquals("In an AVL-2 tree with three descending order integers inserted, " +
+                "the new height was not the expected one.", 1, tree.getHeight());
+        assertEquals( 3, tree.getCount());
+        assertTrue(tree.isAVLGBalanced());
+        tree.pr();
+        tree.insert(-3);
+        tree.pr();
+        tree.delete(-1);
+        tree.pr();
+    }
+/*
+    @Test
+    public void test2() throws InvalidBalanceException, EmptyTreeException {
+        tree = new AVLGTree<>(2);
+        tree.insert(0);
+        tree.insert(-1);
+        tree.insert(-2);
+        tree.insert(-3);
+        assertEquals("In an AVL-2 tree with three descending order integers inserted, " +
+                "the new root was not the expected one.", new Integer(-1), tree.getRoot());
+        assertEquals("In an AVL-2 tree with three descending order integers inserted, " +
+                "the new height was not the expected one.", 2, tree.getHeight());
+        assertEquals( 4, tree.getCount()); // Height of 2 expected
+        assertTrue(tree.isAVLGBalanced());
+        tree.pr();
+    }
+
+    @Test
+    public void test3() throws InvalidBalanceException, EmptyTreeException {
+        tree = new AVLGTree<>(3);
+        tree.insert(0);
+        tree.insert(-1);
+        tree.insert(-2);
+        tree.insert(-3);
+        tree.insert(-4);
+        assertEquals("In an AVL-2 tree with three descending order integers inserted, " +
+                "the new root was not the expected one.", new Integer(-1), tree.getRoot());
+        assertEquals("In an AVL-2 tree with three descending order integers inserted, " +
+                "the new height was not the expected one.", 3, tree.getHeight());
+        assertEquals( 5, tree.getCount()); // Height of 2 expected
+        assertTrue(tree.isAVLGBalanced());
+        tree.pr();
+    }*/
+
+
+    @Test
+    public void test4() throws InvalidBalanceException, EmptyTreeException {
+        Random rand = new Random();
+        tree = new AVLGTree<>(3);
+
+        for (int i = 0; i < 1000; i++) {
+            tree.insert(rand.nextInt((1000 - 0) + 1) + 1000);
+            assertTrue(tree.isAVLGBalanced());
+        }
+
+        for (int i = 0; i < 200; i++){
+            tree.delete(rand.nextInt((1000 - 0) + 1) + 1000);
+            assertTrue(tree.isAVLGBalanced());
+        }
+
+
+        assertTrue(tree.isAVLGBalanced());
+    }
+
 }

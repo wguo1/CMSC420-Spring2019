@@ -3,6 +3,8 @@ package projects.avlg;
 import projects.avlg.exceptions.EmptyTreeException;
 import projects.avlg.exceptions.InvalidBalanceException;
 
+import java.util.List;
+
 /** <p>An <tt>AVL-G Tree</tt> is an AVL Tree with a relaxed balance condition. Its constructor receives a strictly
  * positive parameter which controls the <b>maximum</b> imbalance allowed on any subtree of the tree which
  * it creates. So, for example:</p>
@@ -29,9 +31,159 @@ public class AVLGTree<T extends Comparable<T>> {
      ************** PLACE YOUR PRIVATE METHODS AND FIELDS HERE: ****************
      ***************************************************************************/
 
+    private final int imbalance;
+    private Node root;
+    private int count = 0;
 
+    private class Node
+    {
+        private int height;
+        private Node left;
+        private Node right;
+        private T value;
 
+        private Node(T key)
+        {
+            height = 0;
+            value = key;
+        }
+    }
 
+    private void updateHeights(Node cur)
+    {
+        if (cur != null)
+            cur.height = Math.max(converter(cur.right), converter(cur.left)) + 1;
+    }
+
+    private int converter(Node cur)
+    {
+        return (cur == null) ? -1 : cur.height;
+    }
+
+    private Node rotateR(Node cur)
+    {
+        Node temp = cur.left;
+        cur.left = temp.right;
+        temp.right = cur;
+
+        updateHeights(cur);
+        updateHeights(temp);
+
+        return temp;
+    }
+
+    private Node rotateL(Node cur)
+    {
+        Node temp = cur.right;
+        cur.right = temp.left;
+        temp.left = cur;
+
+        updateHeights(cur);
+        updateHeights(temp);
+
+        return temp;
+    }
+
+    private Node rotateLR(Node cur) {
+        cur.left = rotateL(cur.left);
+        return rotateR(cur);
+    }
+
+    private Node rotateRL(Node cur) {
+        cur.right = rotateR(cur.right);
+        return rotateL(cur);
+    }
+
+    private Node inOrderDelete(T val, Node cur, Node indicator)
+    {
+        if (cur == null)
+            indicator.value = null;
+        else if (val.compareTo(cur.value) < 0) {
+            cur.left = inOrderDelete(val, cur.left, indicator);
+            if(converter(cur.left) - converter(cur.right) < (-1 * getMaxImbalance()))
+                cur = (converter(cur.right.left) > converter(cur.right.right)) ? rotateRL(cur) : rotateL(cur);
+        }
+        else if (val.compareTo(cur.value) > 0) {
+            cur.right = inOrderDelete(val ,cur.right, indicator);
+            if(converter(cur.left) - converter(cur.right) > getMaxImbalance())
+                cur = (converter(cur.left.left) < converter(cur.left.right)) ? rotateLR(cur) : rotateR(cur);
+        }
+        else
+        {
+            if (cur.right == null && cur.left == null)
+                cur = null;
+            else if (cur.left == null)
+                cur = cur.right;
+            else if (cur.right == null)
+                cur = cur.left;
+            else {
+                Node temp = cur.left;
+                while(temp.right != null)
+                    temp = temp.right;
+
+                cur.value = temp.value;
+                cur.left = inOrderDelete(temp.value, cur.left, indicator);
+                if(converter(cur.left) - converter(cur.right) < (-1 * getMaxImbalance()))
+                    cur = (converter(cur.right.left) > converter(cur.right.right)) ? rotateRL(cur) : rotateL(cur);
+            }
+        }
+
+        updateHeights(cur);
+        return cur;
+    }
+
+    private Node avlSearch(Node cur, T key) {
+        if (cur != null)
+        {
+            if (key.compareTo(cur.value) < 0)
+                cur = avlSearch(cur.left, key);
+            else if (key.compareTo(cur.value) > 0)
+                cur = avlSearch(cur.right, key);
+        }
+
+        return cur;
+    }
+
+    private Node insertNode(T key, Node cur){
+        if (cur == null) {
+            cur = new Node(key);
+            count++;
+        }
+        else if (key.compareTo(cur.value) < 0) {
+            cur.left = insertNode(key, cur.left);
+            if (converter(cur.left) - converter(cur.right) > getMaxImbalance())
+                cur = (key.compareTo(cur.left.value) < 0) ? rotateR(cur) : rotateLR(cur);
+        }
+        else if (key.compareTo(cur.value) > 0) {
+            cur.right = insertNode(key, cur.right);
+            if (converter(cur.left) - converter(cur.right) < (-1 * getMaxImbalance()))
+                cur = (key.compareTo(cur.right.value) > 0) ? rotateL(cur) : rotateRL(cur);
+        }
+
+        updateHeights(cur);
+        return cur;
+    }
+
+    private boolean isBSTHelper(Node cur) {
+        if (cur == null || (cur.left == null && cur.right == null))
+            return true;
+        else if (cur.left == null)
+            return (cur.value.compareTo(cur.right.value) < 0) && isBSTHelper(cur.right);
+        else if (cur.right == null)
+            return (cur.value.compareTo(cur.left.value) > 0) && isBSTHelper(cur.left);
+        else
+            return (cur.value.compareTo(cur.right.value) < 0) && (cur.value.compareTo(cur.left.value) > 0) &&
+                    isBSTHelper(cur.right) && isBSTHelper(cur.left);
+    }
+
+    private boolean balanced(Node cur) {
+        boolean result = true;
+        if (cur != null)
+            result = (Math.abs(converter(cur.right) - converter(cur.left)) <= getMaxImbalance()) &&
+                    balanced(cur.left) && balanced(cur.right);
+
+        return result;
+    }
     /* *********************************************************************
      ************************* PUBLIC (INTERFACE) METHODS *******************
      **********************************************************************/
@@ -42,15 +194,19 @@ public class AVLGTree<T extends Comparable<T>> {
      * @throws InvalidBalanceException if <tt>maxImbalance</tt> is a value smaller than 1.
      */
     public AVLGTree(int maxImbalance) throws InvalidBalanceException {
-        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
+        if (maxImbalance < 1)
+            throw new InvalidBalanceException("Constructor is broken");
+        else
+            imbalance = maxImbalance;
     }
 
     /**
      * Insert <tt>key</tt> in the tree.
      * @param key The key to insert in the tree.
      */
+
     public void insert(T key) {
-        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
+        root = insertNode(key, root);
     }
 
     /**
@@ -60,7 +216,17 @@ public class AVLGTree<T extends Comparable<T>> {
      * @throws EmptyTreeException if the tree is empty.
      */
     public T delete(T key) throws EmptyTreeException {
-        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
+        if (root == null)
+            throw new EmptyTreeException("Delete");
+        else {
+            Node indicator = new Node(key);
+            root = inOrderDelete(key, root, indicator);
+
+            if (indicator.value != null)
+                count--;
+
+            return indicator.value;
+        }
     }
 
     /**
@@ -71,15 +237,22 @@ public class AVLGTree<T extends Comparable<T>> {
      * @throws EmptyTreeException if the tree is empty.
      */
     public T search(T key) throws EmptyTreeException {
-        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
+        if (root == null)
+            throw new EmptyTreeException("Empty Tree");
+        else
+        {
+            Node node = avlSearch(root, key);
+            return (node == null) ? null : node.value;
+        }
     }
+
 
     /**
      * Retrieves the maximum imbalance parameter.
      * @return The maximum imbalance parameter provided as a constructor parameter.
      */
     public int getMaxImbalance(){
-        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
+        return imbalance;
     }
 
 
@@ -90,7 +263,7 @@ public class AVLGTree<T extends Comparable<T>> {
      * @return The height of the tree. If the tree is empty, returns -1.
      */
     public int getHeight() {
-        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
+        return (root == null) ? -1 : root.height;
     }
 
     /**
@@ -98,7 +271,7 @@ public class AVLGTree<T extends Comparable<T>> {
      * @return <tt>true</tt> if the tree is empty, <tt>false</tt> otherwise.
      */
     public boolean isEmpty() {
-        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
+        return root == null;
     }
 
     /**
@@ -107,9 +280,11 @@ public class AVLGTree<T extends Comparable<T>> {
      * @throws  EmptyTreeException if the tree is empty.
      */
     public T getRoot() throws EmptyTreeException{
-        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
+        if (root == null)
+            throw new EmptyTreeException("getRoot");
+        else
+            return root.value;
     }
-
 
     /**
      * <p>Establishes whether the AVL-G tree <em>globally</em> satisfies the BST condition. This method is
@@ -118,7 +293,7 @@ public class AVLGTree<T extends Comparable<T>> {
      * <tt>false</tt> otherwise.
      */
     public boolean isBST() {
-        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
+        return isBSTHelper(root);
     }
 
 
@@ -129,15 +304,18 @@ public class AVLGTree<T extends Comparable<T>> {
      * <tt>false</tt> otherwise.
      */
     public boolean isAVLGBalanced() {
-        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
+        return isBST() && balanced(root);
     }
+
+
 
     /**
      * <p>Empties the <tt>AVLGTree</tt> of all its elements. After a call to this method, the
      * tree should have <b>0</b> elements.</p>
      */
     public void clear(){
-        throw  UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
+        root = null;
+        count = 0;
     }
 
 
@@ -146,7 +324,15 @@ public class AVLGTree<T extends Comparable<T>> {
      * @return  The number of elements in the tree.
      */
     public int getCount(){
-        throw UNIMPL_METHOD; // ERASE THIS LINE AFTER IMPLEMENTING THE METHOD!
+        return count;
+    }
 
+    public void pr(){System.out.println(inOrder(root));}
+
+    private String inOrder(Node cur)
+    {
+        if (cur == null)
+            return "";
+        return inOrder(cur.left) + " " + cur.value.toString() + "H:" + cur.height + " " + inOrder(cur.right);
     }
 }
