@@ -6,10 +6,9 @@ import projects.phonebook.hashes.HashTable;
  * <p>{@link PrimeGenerator} is a simple <b>immutable</b> class which stores and retrieves <b>prime numbers</b>. Since
  * we use this class from within the context of {@link HashTable} instances, we implement
  * the scheme that we have talked about in class: whenever a hash table wants to enlarge,
- * it will make a call to {@link #getNextPrime()}, which will provide it with the <b>first prime</b>
- * with the property that it is greater than two times the current prime. This does not simply
- * mean that the current index into our collection of primes should be doubled, since primes
- * are not uniformly distributed on the line of positive integers! </p>
+ * it will make a call to {@link #getNextPrime()}, which will provide it with the <b>largest prime</b>
+ * smaller than two times the current prime. This does <b>not</b> simply mean that the current index into our collection of primes
+ * should be doubled, since primes are not uniformly distributed on the line of positive integers! </p>
  *
  * <p><b>**** DO NOT EDIT THIS CLASS! ****** </b></p>
  *
@@ -18,7 +17,7 @@ import projects.phonebook.hashes.HashTable;
  * @see #getNextPrime()
  * @see #getPreviousPrime()
  *
- * @author <a href="mailto:jason.filippou@gmail.com">Jason Filippou</a>
+ * @author <a href="https://github.com/JasonFil">Jason Filippou</a>
  */
 public class PrimeGenerator {
 
