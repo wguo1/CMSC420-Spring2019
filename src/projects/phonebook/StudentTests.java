@@ -111,7 +111,7 @@ public class StudentTests {
         lp.remove("Thomas");
         assertEquals("Linear Probing hash with starting capacity of 7 should have a capacity of 13 after " +
                 "five insertions and a failed deletion.", 13, lp.capacity());
-        qp.put("DeAndre","888-1212-3340" );
+        qp.remove("Thomas" );
         assertEquals("Quadratic Probing hash with starting capacity of 7 should have a capacity of 13 after " +
                 "five insertions and a failed deletion.", 13, qp.capacity());
     }
