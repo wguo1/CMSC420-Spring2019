@@ -6,6 +6,9 @@ import projects.avlg.exceptions.InvalidBalanceException;
 import java.util.List;
 
 /** <p>An <tt>AVL-G Tree</tt> is an AVL Tree with a relaxed balance condition. Its constructor receives a strictly
+=======
+/** <p>An AVL-G Tree is an AVL Tree with a relaxed balance condition. Its constructor receives a strictly
+>>>>>>> upstream/master
  * positive parameter which controls the <b>maximum</b> imbalance allowed on any subtree of the tree which
  * it creates. So, for example:</p>
  *  <ul>
@@ -191,7 +194,7 @@ public class AVLGTree<T extends Comparable<T>> {
     /**
      * The class constructor provides the tree with its maximum maxImbalance allowed.
      * @param maxImbalance The maximum maxImbalance allowed by the AVL-G Tree.
-     * @throws InvalidBalanceException if <tt>maxImbalance</tt> is a value smaller than 1.
+     * @throws InvalidBalanceException if maxImbalance is a value smaller than 1.
      */
     public AVLGTree(int maxImbalance) throws InvalidBalanceException {
         if (maxImbalance < 1)
@@ -201,7 +204,7 @@ public class AVLGTree<T extends Comparable<T>> {
     }
 
     /**
-     * Insert <tt>key</tt> in the tree.
+     * Insert key in the tree.
      * @param key The key to insert in the tree.
      */
 
@@ -212,7 +215,7 @@ public class AVLGTree<T extends Comparable<T>> {
     /**
      * Delete the key from the data structure and return it to the caller.
      * @param key The key to delete from the structure.
-     * @return The key that was removed, or <tt>null</tt> if the key was not found.
+     * @return The key that was removed, or null if the key was not found.
      * @throws EmptyTreeException if the tree is empty.
      */
     public T delete(T key) throws EmptyTreeException {
@@ -230,10 +233,10 @@ public class AVLGTree<T extends Comparable<T>> {
     }
 
     /**
-     * <p>Search for <tt>key</tt> in the tree. Return a reference to it if it's in there,
-     * or <tt>null</tt> otherwise.</p>
+     * <p>Search for key in the tree. Return a reference to it if it's in there,
+     * or null otherwise.</p>
      * @param key The key to search for.
-     * @return <tt>key</tt> if <tt>key</tt> is in the tree, or <tt>null</tt> otherwise.
+     * @return key if key is in the tree, or null otherwise.
      * @throws EmptyTreeException if the tree is empty.
      */
     public T search(T key) throws EmptyTreeException {
@@ -268,7 +271,7 @@ public class AVLGTree<T extends Comparable<T>> {
 
     /**
      * Query the tree for emptiness. A tree is empty iff it has zero keys stored.
-     * @return <tt>true</tt> if the tree is empty, <tt>false</tt> otherwise.
+     * @return true if the tree is empty, false otherwise.
      */
     public boolean isEmpty() {
         return root == null;
@@ -289,8 +292,8 @@ public class AVLGTree<T extends Comparable<T>> {
     /**
      * <p>Establishes whether the AVL-G tree <em>globally</em> satisfies the BST condition. This method is
      * <b>terrifically useful for testing!</b></p>
-     * @return <tt>true</tt> if the tree satisfies the Binary Search Tree property,
-     * <tt>false</tt> otherwise.
+     * @return true if the tree satisfies the Binary Search Tree property,
+     * false otherwise.
      */
     public boolean isBST() {
         return isBSTHelper(root);
@@ -300,8 +303,8 @@ public class AVLGTree<T extends Comparable<T>> {
     /**
      * <p>Establishes whether the AVL-G tree <em>globally</em> satisfies the AVL-G condition. This method is
      * <b>terrifically useful for testing!</b></p>
-     * @return <tt>true</tt> if the tree satisfies the Binary Search Tree property,
-     * <tt>false</tt> otherwise.
+     * @return true if the tree satisfies the Binary Search Tree property,
+     * false otherwise.
      */
     public boolean isAVLGBalanced() {
         return isBST() && balanced(root);
@@ -310,7 +313,7 @@ public class AVLGTree<T extends Comparable<T>> {
 
 
     /**
-     * <p>Empties the <tt>AVLGTree</tt> of all its elements. After a call to this method, the
+     * <p>Empties the AVLGTree of all its elements. After a call to this method, the
      * tree should have <b>0</b> elements.</p>
      */
     public void clear(){
