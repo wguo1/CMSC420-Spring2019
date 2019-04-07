@@ -8,5 +8,9 @@ demos.matrices.java
 demos.traversals
 projects.avlg
 projects.avlg.exceptions
+projects.bpt
 projects.graph
 projects.graph.utils
+projects.phonebook
+projects.phonebook.hashes
+projects.phonebook.utils
